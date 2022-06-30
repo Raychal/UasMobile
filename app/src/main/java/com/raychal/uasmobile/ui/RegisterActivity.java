@@ -39,31 +39,31 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String Password = Objects.requireNonNull(binding.inputPassword.getText()).toString();
 
         if (UserName.isEmpty()) {
-            binding.textInputLayoutUsername.setError("Please enter valid username!");
+            binding.inputPassword.setError("Please enter valid username!");
         } else {
             if (UserName.length() > 5) {
                 valid = true;
-                binding.textInputLayoutEmail.setError(null);
+                binding.inputPassword.setError(null);
             } else {
-                binding.textInputLayoutPassword.setError("Username is to short!");
+                binding.inputPassword.setError("Username is to short!");
             }
         }
 
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches()) {
-            binding.textInputLayoutEmail.setError("Please enter valid email!");
+            binding.inputEmail.setError("Please enter valid email!");
         } else {
             valid = true;
-            binding.textInputLayoutEmail.setError(null);
+            binding.inputEmail.setError(null);
         }
 
         if (Password.isEmpty()) {
-            binding.textInputLayoutPassword.setError("Please enter valid password!");
+            binding.inputPassword.setError("Please enter valid password!");
         } else {
             if (Password.length() > 5) {
                 valid = true;
-                binding.textInputLayoutPassword.setError(null);
+                binding.inputPassword.setError(null);
             } else {
-                binding.textInputLayoutPassword.setError("Password is to short!");
+                binding.inputPassword.setError("Password is to short!");
             }
         }
         return valid;

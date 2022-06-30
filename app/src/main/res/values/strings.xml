@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">UAS - Pemrograman Mobile</string>
 
+    <string name="welcome">Welcome to My App</string>
+
     <string name="username_home">Username :</string>
     <string name="email_home">Email :</string>
     <string name="login">Login</string>

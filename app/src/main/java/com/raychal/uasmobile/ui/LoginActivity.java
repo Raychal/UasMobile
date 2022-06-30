@@ -48,19 +48,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (validate()) {
             String UserName = Objects.requireNonNull(binding.inputUsername.getText()).toString();
             String Password = Objects.requireNonNull(binding.inputPassword.getText()).toString();
+
             User currentUser = sqliteHelper.Authenticate(new User(null, UserName, null, Password));
+
             if (currentUser != null) {
+                Snackbar.make(binding.btnLogin, "Successfully Logged in!", Snackbar.LENGTH_LONG).show();
 
-                boolean updateSession = sqliteHelper.upgradeSession("ada", 1);
-                if (updateSession){
-                    Snackbar.make(binding.btnLogin, "Successfully Logged in!", Snackbar.LENGTH_LONG).show();
+                sessionManager.createLoginSession(currentUser);
 
-                    sessionManager.createLoginSession(currentUser);
-                    sessionManager.getUserDetail();
-                    Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+
             } else {
                 Snackbar.make(binding.btnLogin, "Failed to log in , please try again", Snackbar.LENGTH_LONG).show();
             }
@@ -74,20 +73,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String Password = Objects.requireNonNull(binding.inputPassword.getText()).toString();
 
         if (UserName.isEmpty()) {
-            binding.textInputLayoutEmail.setError("Please enter valid email!");
+            binding.inputUsername.setError("Please enter valid username!");
         } else {
             valid = true;
-            binding.textInputLayoutEmail.setError(null);
+            binding.inputUsername.setError(null);
         }
 
         if (Password.isEmpty()) {
-            binding.textInputLayoutPassword.setError("Please enter valid password!");
+            binding.inputPassword.setError("Please enter valid password!");
         } else {
             if (Password.length() > 5) {
                 valid = true;
-                binding.textInputLayoutPassword.setError(null);
+                binding.inputPassword.setError(null);
             } else {
-                binding.textInputLayoutPassword.setError("Password is to short!");
+                binding.inputPassword.setError("Password is to short!");
             }
         }
         return valid;

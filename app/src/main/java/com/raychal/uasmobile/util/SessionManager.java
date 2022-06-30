@@ -42,12 +42,12 @@ public class SessionManager {
         return user;
     }
 
-    private void logoutSession() {
+    public void logoutSession() {
         editor.clear();
         editor.commit();
     }
 
-    private boolean isLoggedIn() {
+    public boolean isLoggedIn() {
         return sharedPreferences.getBoolean(IS_LOGGED_IN, false);
     }
 

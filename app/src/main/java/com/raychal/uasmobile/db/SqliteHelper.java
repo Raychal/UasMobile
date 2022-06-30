@@ -13,12 +13,10 @@ public class SqliteHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "uas";
     public static final int DATABASE_VERSION = 1;
     public static final String TABLE_USERS = "users";
-    public static final String TABLE_SESSION = "session";
     public static final String KEY_ID = "id";
     public static final String KEY_USER_NAME = "username";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
-    public static final String KEY_LOGIN = "login";
     public static final String SQL_TABLE_USERS = " CREATE TABLE " + TABLE_USERS
             + " ( "
             + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -27,44 +25,20 @@ public class SqliteHelper extends SQLiteOpenHelper {
             + KEY_PASSWORD + " TEXT"
             + " ) ";
 
-    public static final String SQL_TABLE_SESSION = " CREATE TABLE " + TABLE_SESSION
-            + " ( "
-            + KEY_ID + " INTEGER PRIMARY KEY, "
-            + KEY_LOGIN + " TEXT "
-            + " ) ";
-
-
     public SqliteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(SQL_TABLE_SESSION);
         sqLiteDatabase.execSQL(SQL_TABLE_USERS);
-        sqLiteDatabase.execSQL("INSERT INTO session(id, login) VALUES (1, 'kosong')");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_SESSION);
         sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_USERS);
     }
 
-    //check session
-    public boolean checkSession(String seessionValues) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        @SuppressLint("Recycle") Cursor cursor = db.rawQuery("SELECT * FROM session WHERE login = ? ", new String[]{seessionValues});
-        return cursor.getCount() > 0;
-    }
-
-    public boolean upgradeSession(String sessionValues, int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("login", sessionValues);
-        long update = db.update("session", contentValues, "id="+id, null);
-        return update != -1;
-    }
     public void addUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
