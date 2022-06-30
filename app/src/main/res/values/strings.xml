@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">UAS - Pemrograman Mobile</string>
+
+    <string name="username_home">Username :</string>
+    <string name="email_home">Email :</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="regis">Register</string>
+    <string name="logout">Logout</string>
+</resources>
