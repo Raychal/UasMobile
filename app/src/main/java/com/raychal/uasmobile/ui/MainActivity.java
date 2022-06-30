@@ -1,7 +1,6 @@
 package com.raychal.uasmobile.ui;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -9,13 +8,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.raychal.uasmobile.databinding.ActivityMainBinding;
 import com.raychal.uasmobile.db.SqliteHelper;
-import com.raychal.uasmobile.model.User;
+import com.raychal.uasmobile.util.SessionManager;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ActivityMainBinding binding;
     private SqliteHelper db;
-    private SQLiteDatabase database;
+    private SessionManager sessionManager;
+    private String username, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(binding.getRoot());
         db = new SqliteHelper(this);
         this.setTitle("Halaman Utama");
+
+        sessionManager = new SessionManager(getApplicationContext());
+
+        username = sessionManager.getUserDetail().get(sessionManager.USERNAME);
+        email = sessionManager.getUserDetail().get(sessionManager.EMAIL);
+
+        binding.tvUsername.setText(username);
+        binding.tvEmail.setText(email);
 
         boolean checkSession = db.checkSession("kosong");
         if (checkSession) {

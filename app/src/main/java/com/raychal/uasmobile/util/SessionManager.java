@@ -14,15 +14,16 @@ public class SessionManager {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    private static final String IS_LOGGED_IN = "isLoggedIn";
-    private static final String USER_ID = "user_id";
-    private static final String USERNAME = "username";
-    private static final String EMAIL = "email";
+    public static final String IS_LOGGED_IN = "isLoggedIn";
+    public static final String USER_ID = "user_id";
+    public static final String USERNAME = "username";
+    public static final String EMAIL = "email";
 
     public SessionManager (Context context) {
         this._context = context;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         editor = sharedPreferences.edit();
+        editor.apply();
     }
 
     public void createLoginSession(User user) {

@@ -17,9 +17,7 @@ import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //Declaration ViewBinding
     private ActivityRegisterBinding binding;
-    //Declaration SqliteHelper
     private SqliteHelper sqliteHelper;
 
     @Override
@@ -33,16 +31,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         binding.btnRegis.setOnClickListener(this);
     }
 
-    //This method is used to validate input given by user
     public boolean validate() {
         boolean valid = false;
 
-        //Get values from EditText fields
         String UserName = Objects.requireNonNull(binding.inputUsername.getText()).toString();
         String Email = Objects.requireNonNull(binding.inputEmail.getText()).toString();
         String Password = Objects.requireNonNull(binding.inputPassword.getText()).toString();
 
-        //Handling validation for UserName field
         if (UserName.isEmpty()) {
             binding.textInputLayoutUsername.setError("Please enter valid username!");
         } else {
@@ -54,7 +49,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         }
 
-        //Handling validation for Email field
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches()) {
             binding.textInputLayoutEmail.setError("Please enter valid email!");
         } else {
@@ -62,7 +56,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             binding.textInputLayoutEmail.setError(null);
         }
 
-        //Handling validation for Password field
         if (Password.isEmpty()) {
             binding.textInputLayoutPassword.setError("Please enter valid password!");
         } else {
@@ -88,21 +81,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             String Email = Objects.requireNonNull(binding.inputEmail.getText()).toString();
             String Password = Objects.requireNonNull(binding.inputPassword.getText()).toString();
 
-
-            //Check in the database is there any user associated with  this email
             if (!sqliteHelper.isUserNameExists(UserName)) {
 
-                //Email does not exist now add new user to database
                 sqliteHelper.addUser(new User(null, UserName, Email, Password));
                 Snackbar.make(binding.btnRegis, "User created successfully! Please Login ", Snackbar.LENGTH_LONG).show();
                 new Handler().postDelayed(this::finish, Snackbar.LENGTH_LONG);
             }else {
-
-                //Email exists with email input provided so show error user already exist
                 Snackbar.make(binding.btnRegis, "User already exists with same username ", Snackbar.LENGTH_LONG).show();
             }
-
-
         }
     }
 }
